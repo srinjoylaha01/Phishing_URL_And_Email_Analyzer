@@ -102,8 +102,8 @@ See [`docs/architecture.md`](docs/architecture.md) and [`docs/architecture.mmd`]
 ## Quick start
 ### 1. Clone
 ```bash
-git clone https://github.com/srinjoylaha01/iam-access-review-risk-analyzer.git
-cd iam-access-review-risk-analyzer
+git clone https://github.com/srinjoylaha01/Phishing_URL_And_Email_Analyzer.git
+cd Phishing_URL_And_Email_Analyzer
 ```
 
 ### 2. Create a virtual environment
