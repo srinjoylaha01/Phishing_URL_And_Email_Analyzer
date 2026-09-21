@@ -30,7 +30,7 @@ This repository is intentionally built incrementally.
 **Completed.** Added URL/email analysis commands, local IOC matching, SQLite persistence, analysis history, stored-analysis inspection, stdin/file input, and structured terminal error handling.
 
 ## Phase 10 — Machine-Learning Module
-Add a separate reproducible training, evaluation, and prediction pipeline.
+**Completed.** Added a separate, optional, reproducible URL ML training/evaluation/prediction pipeline using a synthetic versioned dataset, Logistic Regression, scaling, metrics, confusion matrix, and local model persistence. ML remains a separate signal from the rule-based risk score.
 
 ## Phase 11 — Streamlit Dashboard
 Add visual analysis, history, and statistics without coupling it to the core CLI.

@@ -3,7 +3,6 @@ from __future__ import annotations
 import argparse
 import sys
 from pathlib import Path
-
 from phishguard.database.repository import AnalysisRepository
 from phishguard.detection.email_rules import analyze_email_rules
 from phishguard.detection.url_rules import analyze_url_rules
@@ -52,15 +51,10 @@ def analyze_url_command(args):
         findings = analyze_url_rules(features)
         assessment = calculate_risk(findings)
         indicators = _load_iocs(args.ioc_file)
-        values = {
-            "domain": (features.hostname,) if features.hostname else (),
-            "url": (features.original_url,),
-            "ip": (features.hostname,) if features.has_ip_address else (),
-        }
+        values = {"domain": (features.hostname,) if features.hostname else (), "url": (features.original_url,),
+                  "ip": (features.hostname,) if features.has_ip_address else ()}
         matches = match_ioc_values(values, indicators)
-        analysis_id = AnalysisRepository(args.db).save_url_analysis(
-            features.original_url, features, findings, assessment, matches
-        )
+        analysis_id = AnalysisRepository(args.db).save_url_analysis(features.original_url, features, findings, assessment, matches)
     except (OSError, TypeError, ValueError) as exc:
         print(f"Error: {exc}", file=sys.stderr)
         return 2
@@ -90,15 +84,10 @@ def analyze_email_command(args):
         findings = analyze_email_rules(features)
         assessment = calculate_risk(findings)
         indicators = _load_iocs(args.ioc_file)
-        values = {
-            "domain": features.url_domains,
-            "url": features.urls,
-            "email": tuple(v for v in (features.sender_email, features.reply_to_email) if v),
-        }
+        values = {"domain": features.url_domains, "url": features.urls,
+                  "email": tuple(v for v in (features.sender_email, features.reply_to_email) if v)}
         matches = match_ioc_values(values, indicators)
-        analysis_id = AnalysisRepository(args.db).save_email_analysis(
-            content, features, findings, assessment, matches
-        )
+        analysis_id = AnalysisRepository(args.db).save_email_analysis(content, features, findings, assessment, matches)
     except (OSError, TypeError, ValueError) as exc:
         print(f"Error: {exc}", file=sys.stderr)
         return 2
@@ -149,32 +138,73 @@ def show_command(args):
         print(f"- {match['ioc_type']}: {match['observed_value']} (source={match['source']})")
     return 0
 
+def ml_train_command(args):
+    try:
+        from phishguard.ml.train import train_from_csv
+        metrics = train_from_csv(args.data, args.model, args.metrics)
+    except ImportError as exc:
+        print("ML dependencies are not installed. Run: python -m pip install -e ".[ml]"", file=sys.stderr)
+        print(f"Details: {exc}", file=sys.stderr)
+        return 2
+    except (OSError, TypeError, ValueError) as exc:
+        print(f"Error: {exc}", file=sys.stderr)
+        return 2
+    print("PhishGuard ML Training")
+    for key, value in metrics.items():
+        print(f"{key}: {value}")
+    print(f"Model saved to: {args.model}")
+    print(f"Metrics saved to: {args.metrics}")
+    return 0
+
+def ml_predict_url_command(args):
+    try:
+        from phishguard.ml.predict import predict_url_from_path
+        prediction = predict_url_from_path(args.url, args.model)
+    except ImportError as exc:
+        print("ML dependencies are not installed. Run: python -m pip install -e ".[ml]"", file=sys.stderr)
+        print(f"Details: {exc}", file=sys.stderr)
+        return 2
+    except (OSError, TypeError, ValueError) as exc:
+        print(f"Error: {exc}", file=sys.stderr)
+        return 2
+    print("PhishGuard ML URL Prediction")
+    print(f"URL: {args.url}")
+    print(f"Label: {prediction.label}")
+    print(f"Probability: {prediction.probability:.4f}")
+    print(f"Model version: {prediction.model_version}")
+    return 0
+
 def build_parser():
     parser = argparse.ArgumentParser(prog="phishguard", description="Defensive phishing URL and email security analyzer.")
     parser.add_argument("--version", action="version", version="phishguard 0.1.0")
     subparsers = parser.add_subparsers(dest="command", required=True)
-
     url_parser = subparsers.add_parser("analyze-url", help="Analyze a URL.")
     url_parser.add_argument("url")
     _add_storage_options(url_parser)
     url_parser.set_defaults(func=analyze_url_command)
-
     email_parser = subparsers.add_parser("analyze-email", help="Analyze email content.")
     source = email_parser.add_mutually_exclusive_group()
     source.add_argument("--text", help="Email content supplied directly.")
     source.add_argument("--file", help="Path to an .eml or text email file.")
     _add_storage_options(email_parser)
     email_parser.set_defaults(func=analyze_email_command)
-
     history_parser = subparsers.add_parser("history", help="Show recent analysis history.")
     history_parser.add_argument("--limit", type=int, default=20)
     history_parser.add_argument("--db", default=str(DEFAULT_DB))
     history_parser.set_defaults(func=history_command)
-
     show_parser = subparsers.add_parser("show", help="Show a stored analysis.")
     show_parser.add_argument("analysis_id", type=int)
     show_parser.add_argument("--db", default=str(DEFAULT_DB))
     show_parser.set_defaults(func=show_command)
+    train_parser = subparsers.add_parser("ml-train", help="Train and evaluate the optional URL ML model.")
+    train_parser.add_argument("--data", default="data/ml/url_training.csv")
+    train_parser.add_argument("--model", default="models/phishguard_url_model.joblib")
+    train_parser.add_argument("--metrics", default="models/phishguard_url_metrics.json")
+    train_parser.set_defaults(func=ml_train_command)
+    predict_parser = subparsers.add_parser("ml-predict-url", help="Predict a URL with the local ML model.")
+    predict_parser.add_argument("url")
+    predict_parser.add_argument("--model", default="models/phishguard_url_model.joblib")
+    predict_parser.set_defaults(func=ml_predict_url_command)
     return parser
 
 def main():
