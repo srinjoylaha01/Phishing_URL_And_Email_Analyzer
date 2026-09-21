@@ -1,0 +1,1 @@
+"""PhishGuard Streamlit dashboard package."""

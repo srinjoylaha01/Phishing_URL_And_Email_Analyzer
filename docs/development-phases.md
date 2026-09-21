@@ -33,7 +33,7 @@ This repository is intentionally built incrementally.
 **Completed.** Added a separate, optional, reproducible URL ML training/evaluation/prediction pipeline using a synthetic versioned dataset, Logistic Regression, scaling, metrics, confusion matrix, and local model persistence. ML remains a separate signal from the rule-based risk score.
 
 ## Phase 11 — Streamlit Dashboard
-Add visual analysis, history, and statistics without coupling it to the core CLI.
+**Completed.** Added a local Streamlit presentation layer for URL/email analysis, explainable findings, IOC matches, and SQLite analysis history. The dashboard reuses the core services and does not fetch submitted URLs or send content externally.
 
 ## Phase 12 — Report Generation
 Implement JSON, CSV, HTML, and TXT output.
