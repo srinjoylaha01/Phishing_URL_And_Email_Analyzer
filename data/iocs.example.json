@@ -1,0 +1,23 @@
+[
+  {
+    "confidence": 90,
+    "description": "Synthetic documentation-only phishing domain.",
+    "ioc_type": "domain",
+    "source": "synthetic-example",
+    "value": "login-example.invalid"
+  },
+  {
+    "confidence": 80,
+    "description": "Synthetic documentation-only URL indicator.",
+    "ioc_type": "url",
+    "source": "synthetic-example",
+    "value": "https://login-example.invalid/verify"
+  },
+  {
+    "confidence": 70,
+    "description": "Reserved documentation IP; included only as a matching example.",
+    "ioc_type": "ip",
+    "source": "synthetic-example",
+    "value": "192.0.2.10"
+  }
+]

@@ -4,7 +4,7 @@ This repository is intentionally built incrementally.
 
 ## Phase 1 — Requirements + Architecture
 
-**Completed in this commit.** Outputs: project scope, security boundaries, functional requirements, architecture, and development roadmap.
+**Completed.** Outputs: project scope, security boundaries, functional requirements, architecture, and development roadmap.
 
 ## Phase 2 — Project Structure + Environment Setup
 
@@ -28,11 +28,11 @@ This repository is intentionally built incrementally.
 
 ## Phase 7 — IOC Database + Threat Intelligence
 
-Add a local IOC workflow and optional external enrichment interfaces.
+**Completed.** Added a local JSON IOC store, deterministic IOC matching, a provider interface for optional enrichment, and synthetic/reserved example indicators. External network enrichment remains disabled by default.
 
 ## Phase 8 — SQLite Database + Analysis History
 
-Persist analysis records, features, findings, and IOC matches.
+Add SQLite persistence for analysis records, features, findings, and IOC matches.
 
 ## Phase 9 — CLI Application
 
