@@ -202,7 +202,7 @@ See [`docs/phase-13-security-review.md`](docs/phase-13-security-review.md).
 |---|---|
 | 1–13 | Completed |
 | 14. README + documentation + architecture diagram | **Completed** |
-| 15. Final GitHub audit + interview preparation | Next |
+| 15. Final GitHub audit + interview preparation | **Completed** |
 
 ## Portfolio talking points
 - Python security tooling
