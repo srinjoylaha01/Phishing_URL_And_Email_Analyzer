@@ -24,7 +24,7 @@ This repository is intentionally built incrementally.
 
 ## Phase 6 — Risk Scoring Engine
 
-Aggregate findings into a bounded transparent score.
+**Completed.** Added transparent 0–100 risk aggregation, documented risk bands, and email-specific scored findings.
 
 ## Phase 7 — IOC Database + Threat Intelligence
 
