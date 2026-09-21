@@ -143,7 +143,7 @@ def ml_train_command(args):
         from phishguard.ml.train import train_from_csv
         metrics = train_from_csv(args.data, args.model, args.metrics)
     except ImportError as exc:
-        print("ML dependencies are not installed. Run: python -m pip install -e ".[ml]"", file=sys.stderr)
+        print('ML dependencies are not installed. Run: python -m pip install -e ".[ml]"', file=sys.stderr)
         print(f"Details: {exc}", file=sys.stderr)
         return 2
     except (OSError, TypeError, ValueError) as exc:
