@@ -36,7 +36,7 @@ This repository is intentionally built incrementally.
 **Completed.** Added a local Streamlit presentation layer for URL/email analysis, explainable findings, IOC matches, and SQLite analysis history. The dashboard reuses the core services and does not fetch submitted URLs or send content externally.
 
 ## Phase 12 — Report Generation
-Implement JSON, CSV, HTML, and TXT output.
+**Completed.** Added JSON, CSV, HTML, and TXT exports for stored analyses with local-only generation and HTML escaping of analysis-derived values.
 
 ## Phase 13 — Testing + Security Review
 Expand automated tests and perform a defensive secure-code review.

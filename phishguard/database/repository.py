@@ -158,8 +158,17 @@ class AnalysisRepository:
                    WHERE im.analysis_id = ? ORDER BY im.id""",
                 (analysis_id,),
             ).fetchall()
+            if analysis["analysis_type"] == "url":
+                feature_row = db.execute(
+                    "SELECT * FROM url_features WHERE analysis_id = ?", (analysis_id,)
+                ).fetchone()
+            else:
+                feature_row = db.execute(
+                    "SELECT * FROM email_features WHERE analysis_id = ?", (analysis_id,)
+                ).fetchone()
             return {
                 "analysis": dict(analysis),
                 "findings": [dict(row) for row in findings],
                 "ioc_matches": [dict(row) for row in matches],
+                "features": dict(feature_row) if feature_row is not None else None,
             }

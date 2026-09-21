@@ -11,6 +11,7 @@ from phishguard.features.url_features import extract_url_features
 from phishguard.ioc.matcher import match_ioc_values
 from phishguard.ioc.store import IOCStore
 from phishguard.scoring.risk_score import calculate_risk
+from phishguard.reporting.report import write_report
 
 DEFAULT_DB = Path("data/phishguard.db")
 DEFAULT_IOCS = Path("data/iocs.example.json")
@@ -138,6 +139,19 @@ def show_command(args):
         print(f"- {match['ioc_type']}: {match['observed_value']} (source={match['source']})")
     return 0
 
+def report_command(args):
+    try:
+        record = AnalysisRepository(args.db).get_analysis(args.analysis_id)
+        if record is None:
+            print(f"Analysis ID {args.analysis_id} was not found.", file=sys.stderr)
+            return 1
+        path = write_report(record, args.format, args.output)
+    except (OSError, TypeError, ValueError) as exc:
+        print(f"Error: {exc}", file=sys.stderr)
+        return 2
+    print(f"Report written to: {path}")
+    return 0
+
 def ml_train_command(args):
     try:
         from phishguard.ml.train import train_from_csv
@@ -161,7 +175,7 @@ def ml_predict_url_command(args):
         from phishguard.ml.predict import predict_url_from_path
         prediction = predict_url_from_path(args.url, args.model)
     except ImportError as exc:
-        print("ML dependencies are not installed. Run: python -m pip install -e ".[ml]"", file=sys.stderr)
+        print('ML dependencies are not installed. Run: python -m pip install -e ".[ml]"', file=sys.stderr)
         print(f"Details: {exc}", file=sys.stderr)
         return 2
     except (OSError, TypeError, ValueError) as exc:
@@ -196,6 +210,12 @@ def build_parser():
     show_parser.add_argument("analysis_id", type=int)
     show_parser.add_argument("--db", default=str(DEFAULT_DB))
     show_parser.set_defaults(func=show_command)
+    report_parser = subparsers.add_parser("report", help="Export a stored analysis report.")
+    report_parser.add_argument("analysis_id", type=int)
+    report_parser.add_argument("--format", choices=("json", "csv", "html", "txt"), required=True)
+    report_parser.add_argument("--output", required=True, help="Output report path.")
+    report_parser.add_argument("--db", default=str(DEFAULT_DB))
+    report_parser.set_defaults(func=report_command)
     train_parser = subparsers.add_parser("ml-train", help="Train and evaluate the optional URL ML model.")
     train_parser.add_argument("--data", default="data/ml/url_training.csv")
     train_parser.add_argument("--model", default="models/phishguard_url_model.joblib")
