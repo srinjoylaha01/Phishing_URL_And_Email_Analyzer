@@ -39,7 +39,7 @@ This repository is intentionally built incrementally.
 **Completed.** Added JSON, CSV, HTML, and TXT exports for stored analyses with local-only generation and HTML escaping of analysis-derived values.
 
 ## Phase 13 — Testing + Security Review
-Expand automated tests and perform a defensive secure-code review.
+**Completed.** Expanded automated tests, added a GitHub Actions test workflow, and documented a defensive security review covering network boundaries, attachment handling, SQL parameterization, HTML escaping, input validation, local IOC behavior, and ML isolation.
 
 ## Phase 14 — README + Documentation + Architecture Diagram
 Polish the repository for portfolio use.
