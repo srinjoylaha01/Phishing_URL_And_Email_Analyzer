@@ -27,7 +27,7 @@ This repository is intentionally built incrementally.
 **Completed.** Added local SQLite persistence for analysis metadata, URL/email features, detections, IOC records, IOC matches, and recent analysis history.
 
 ## Phase 9 — CLI Application
-Implement the documented command structure and clean terminal output.
+**Completed.** Added URL/email analysis commands, local IOC matching, SQLite persistence, analysis history, stored-analysis inspection, stdin/file input, and structured terminal error handling.
 
 ## Phase 10 — Machine-Learning Module
 Add a separate reproducible training, evaluation, and prediction pipeline.
