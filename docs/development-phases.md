@@ -8,19 +8,19 @@ This repository is intentionally built incrementally.
 
 ## Phase 2 — Project Structure + Environment Setup
 
-Create the Python package, dependency management, configuration directories, test layout, and development tooling.
+**Completed.** Created the Python package, dependency management, configuration directories, test layout, and development tooling.
 
 ## Phase 3 — URL Parser + URL Feature Extraction
 
-Implement safe URL parsing and reusable URL features.
+**Completed.** Implemented safe URL parsing and reusable URL features.
 
 ## Phase 4 — URL Phishing Detection Rules
 
-Implement configurable URL rules and evidence-based findings.
+**Completed.** Implemented configurable URL rules and evidence-based findings.
 
 ## Phase 5 — Email Parser + Email Analysis
 
-Support `.txt`, `.eml`, and pasted email content.
+**Completed.** Added safe email parsing and deterministic email feature extraction for pasted/RFC-style email content.
 
 ## Phase 6 — Risk Scoring Engine
 
