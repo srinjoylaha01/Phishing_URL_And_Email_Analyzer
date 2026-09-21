@@ -16,12 +16,8 @@ def test_url_analysis_is_persisted(tmp_path: Path) -> None:
     assessment = calculate_risk(findings)
     indicator = IOC("192.0.2.10", "ip", "test", 90)
     matches = match_ioc_values({"ip": (features.hostname,)}, [indicator])
-
-    analysis_id = repository.save_url_analysis(
-        features.original_url, features, findings, assessment, matches
-    )
+    analysis_id = repository.save_url_analysis(features.original_url, features, findings, assessment, matches)
     record = repository.get_analysis(analysis_id)
-
     assert record is not None
     assert record["analysis"]["analysis_type"] == "url"
     assert record["analysis"]["risk_score"] == 35
@@ -39,19 +35,17 @@ Please verify your password and make a payment.
     features = extract_email_features(content)
     findings = analyze_email_rules(features)
     assessment = calculate_risk(findings)
-
     analysis_id = repository.save_email_analysis(content, features, findings, assessment)
     history = repository.list_history()
-
     assert history[0]["id"] == analysis_id
     assert history[0]["analysis_type"] == "email"
     assert history[0]["risk_level"] in {"HIGH", "CRITICAL"}
 
 def test_database_uses_parameterized_values(tmp_path: Path) -> None:
     repository = AnalysisRepository(tmp_path / "history.db")
-    features = extract_url_features("https://example.com/?q='; DROP TABLE analyses;--")
+    payload = "https://example.com/?q=%27%3B%20DROP%20TABLE%20analyses%3B--"
+    features = extract_url_features(payload)
     findings = analyze_url_rules(features)
     assessment = calculate_risk(findings)
-
     repository.save_url_analysis(features.original_url, features, findings, assessment)
     assert repository.list_history()

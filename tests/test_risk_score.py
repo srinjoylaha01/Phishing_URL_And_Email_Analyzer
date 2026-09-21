@@ -1,3 +1,4 @@
+from phishguard.detection.rule_engine import DetectionFinding
 from phishguard.detection.url_rules import analyze_url_rules
 from phishguard.features.url_features import extract_url_features
 from phishguard.scoring.risk_score import calculate_risk, classify_score
@@ -21,11 +22,12 @@ def test_url_findings_are_aggregated() -> None:
     assert assessment.finding_count == 2
 
 def test_score_is_capped_at_100() -> None:
-    features = extract_url_features(
-        "https://user@a.b.c.example.com/account/login/" + "x" * 130
+    finding = DetectionFinding(
+        rule_id="TEST-CAP", description="synthetic cap test", severity="CRITICAL",
+        points=125, evidence="test", explanation="test", recommendation="test",
     )
-    assessment = calculate_risk(analyze_url_rules(features))
-    assert assessment.raw_score > 100
+    assessment = calculate_risk([finding])
+    assert assessment.raw_score == 125
     assert assessment.score == 100
     assert assessment.level == "CRITICAL"
 

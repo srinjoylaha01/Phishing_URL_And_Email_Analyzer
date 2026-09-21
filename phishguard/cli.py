@@ -74,8 +74,12 @@ def _read_email(args):
         return Path(args.file).read_text(encoding="utf-8")
     if args.text is not None:
         return args.text
-    if not sys.stdin.isatty():
-        return sys.stdin.read()
+    try:
+        if not sys.stdin.isatty():
+            return sys.stdin.read()
+    except OSError:
+        # Captured/non-interactive stdin may reject reads; treat it like no source.
+        pass
     raise ValueError("Provide --text, --file, or pipe email content through stdin")
 
 def analyze_email_command(args):
