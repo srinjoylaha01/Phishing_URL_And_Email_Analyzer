@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "phishguard"
+version = "0.1.0"
+description = "Defensive phishing URL and email security analyzer"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "Srinjoy Laha"}]
+dependencies = []
+
+[project.optional-dependencies]
+dashboard = ["streamlit>=1.35,<2"]
+ml = ["pandas>=2.0,<3", "scikit-learn>=1.4,<2", "joblib>=1.3,<2"]
+dev = ["pytest>=8,<9", "ruff>=0.6,<1"]
+
+[project.scripts]
+phishguard = "phishguard.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["phishguard*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"

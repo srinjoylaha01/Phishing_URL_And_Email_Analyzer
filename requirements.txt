@@ -1,0 +1,14 @@
+# Core dependencies
+# PhishGuard core is intentionally dependency-light in Phase 2.
+
+# Optional dashboard:
+# streamlit>=1.35,<2
+
+# Optional machine learning:
+# pandas>=2.0,<3
+# scikit-learn>=1.4,<2
+# joblib>=1.3,<2
+
+# Development:
+# pytest>=8,<9
+# ruff>=0.6,<1
