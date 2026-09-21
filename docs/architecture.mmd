@@ -1,0 +1,14 @@
+flowchart TD
+    A["User Input<br/>URL / TXT / EML"] --> B["Validation + Parsing"]
+    B --> C["Feature Extraction"]
+    C --> D["Detection Rule Engine"]
+    C --> E["Local IOC Matching"]
+    C --> F["Optional ML Signal"]
+    D --> G["Transparent Risk Score<br/>0–100"]
+    E --> G
+    G --> H["SQLite Analysis History"]
+    G --> I["Report Generator<br/>JSON / CSV / HTML / TXT"]
+    H --> J["CLI"]
+    H --> K["Streamlit Dashboard"]
+    F --> J
+    F --> K

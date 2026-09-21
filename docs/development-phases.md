@@ -30,19 +30,19 @@ This repository is intentionally built incrementally.
 **Completed.** Added URL/email analysis commands, local IOC matching, SQLite persistence, analysis history, stored-analysis inspection, stdin/file input, and structured terminal error handling.
 
 ## Phase 10 — Machine-Learning Module
-**Completed.** Added a separate, optional, reproducible URL ML training/evaluation/prediction pipeline using a synthetic versioned dataset, Logistic Regression, scaling, metrics, confusion matrix, and local model persistence. ML remains a separate signal from the rule-based risk score.
+**Completed.** Added a separate, optional, reproducible URL ML training/evaluation/prediction pipeline using a synthetic versioned dataset, Logistic Regression, scaling, metrics, confusion matrix, and local model persistence.
 
 ## Phase 11 — Streamlit Dashboard
-**Completed.** Added a local Streamlit presentation layer for URL/email analysis, explainable findings, IOC matches, and SQLite analysis history. The dashboard reuses the core services and does not fetch submitted URLs or send content externally.
+**Completed.** Added a local Streamlit presentation layer for URL/email analysis, explainable findings, IOC matches, and SQLite analysis history.
 
 ## Phase 12 — Report Generation
 **Completed.** Added JSON, CSV, HTML, and TXT exports for stored analyses with local-only generation and HTML escaping of analysis-derived values.
 
 ## Phase 13 — Testing + Security Review
-**Completed.** Expanded automated tests, added a GitHub Actions test workflow, and documented a defensive security review covering network boundaries, attachment handling, SQL parameterization, HTML escaping, input validation, local IOC behavior, and ML isolation.
+**Completed.** Expanded automated tests, added GitHub Actions CI, and documented a defensive security review covering network boundaries, attachment handling, SQL parameterization, HTML escaping, input validation, local IOC behavior, and ML isolation.
 
 ## Phase 14 — README + Documentation + Architecture Diagram
-Polish the repository for portfolio use.
+**Completed.** Replaced the initial planning README with portfolio-ready documentation, updated the architecture documentation, added a Mermaid architecture diagram source, and added the MIT license.
 
 ## Phase 15 — Final GitHub Audit + Interview Preparation
-Audit the repository and prepare project explanations, technical questions, resume bullets, and LinkedIn content.
+Final audit of repository quality, implementation consistency, documentation, and interview-ready project explanations.
