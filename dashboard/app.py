@@ -151,7 +151,7 @@ def history_tab():
     columns = st.columns(4)
     for column, level in zip(columns, counts):
         column.metric(level, counts[level])
-    st.bar_chart({"count": counts})
+    st.bar_chart({"count": [counts[level] for level in counts]}, x=None)
     st.dataframe(
         [
             {
