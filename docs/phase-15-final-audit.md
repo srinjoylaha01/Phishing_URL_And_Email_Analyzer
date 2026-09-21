@@ -44,7 +44,7 @@ The Phase 14 GitHub Actions run exposed six test failures. They were traced to s
 - IOC data is local synthetic/example data by default.
 - Email registrable-domain comparison is a lightweight heuristic rather than a full public-suffix implementation.
 - The security review is a defensive code review, not a penetration test or third-party audit.
-- The repository name remains iam-access-review-risk-analyzer even though the implemented project is PhishGuard.
+- The repository is named Phishing_URL_And_Email_Analyzer; the Python package remains PhishGuard.
 
 ## Interview-ready explanation
 
